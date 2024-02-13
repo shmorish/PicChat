@@ -5,71 +5,35 @@
 //  Created by 森下翔登 on 2024/02/14.
 //
 
-//import SwiftUI
-//
-//struct Message: Identifiable {
-//    let id: Int
-//    let content: String
-//}
-//
-//class ChatViewModel: ObservableObject {
-//    @Published var messages: [Message] = []
-//    
-//    func sendMessage(_ messageContent: String) {
-//        let newMessage = Message(id: messages.count + 1, content: messageContent)
-//        messages.append(newMessage)
-//    }
-//}
-//
-//struct ChatView: View {
-//    @State private var messageText = ""
-//    @ObservedObject var chatViewModel = ChatViewModel()
-//
-// var body: some View {
-//        VStack {
-//            ScrollView {
-//                ForEach(chatViewModel.messages) { message in
-//                    Text(message.content)
-//                }
-//            }
-//
-//            HStack {
-//                TextField("メッセージを入力", text: $messageText)
-//                    .textFieldStyle(RoundedBorderTextFieldStyle())
-//
-//                Button("送信") {
-//                    if !messageText.isEmpty {
-//                        chatViewModel.sendMessage(messageText)
-//                        print($messageText)
-//                        messageText = ""
-//                    }
-//                }
-//            }.padding()
-//        }
-//    }
-//}
-
 import SwiftUI
 
 struct Message: Identifiable {
     let id: Int
     let content: String
-    let isCurrentUser: Bool // これでメッセージが現在のユーザーのものかどうかを判定します
+    let isCurrentUser: Bool
+    let isLogMessage : Bool
 }
+
 
 class ChatViewModel: ObservableObject {
     @Published var messages: [Message] = []
     
-    func sendMessage(_ messageContent: String) {
-        // isCurrentUserをtrueにして、これが現在のユーザーのメッセージであることを示します。
-        let newMessage = Message(id: messages.count + 1, content: messageContent, isCurrentUser: true)
+    func sendMessage(_ messageContent: String, isCurrentUser: Bool = true, isLogMessage: Bool = false) {
+        let newMessage = Message(id: messages.count + 1, content: messageContent, isCurrentUser: isCurrentUser, isLogMessage: isLogMessage)
         messages.append(newMessage)
+    }
+
+    // ユーザーが入室した際のメッセージを追加するメソッド
+    func userDidEnter(username: String) {
+        let enterMessage = "\(username)さんが入室しました"
+        sendMessage(enterMessage, isLogMessage: true)
     }
 }
 
 struct ChatView: View {
     @State private var messageText = ""
     @ObservedObject var chatViewModel = ChatViewModel()
+    var userName: String // ユーザー名を受け取るためのプロパティ
 
     var body: some View {
         VStack {
@@ -87,12 +51,17 @@ struct ChatView: View {
 
                 Button("送信") {
                     if !messageText.isEmpty {
-                        chatViewModel.sendMessage(messageText)
+                        chatViewModel.sendMessage(messageText, isCurrentUser: true) // 現在のユーザーのメッセージとして送信
                         messageText = ""
                     }
                 }
             }.padding()
         }
+        .onAppear {
+            chatViewModel.userDidEnter(username: userName) // ビューが表示された時にユーザー入室メッセージを追加
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: EmptyView())
     }
 }
 
@@ -101,8 +70,17 @@ struct MessageView: View {
 
     var body: some View {
         HStack {
-            if message.isCurrentUser {
-                Spacer() // 現在のユーザーのメッセージは右側に表示
+            if message.isLogMessage
+            {
+                Spacer()
+                Text(message.content)
+                    .padding()
+                    .foregroundColor(.green)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
+                Spacer()
+            } else if message.isCurrentUser {
+                Spacer()
                 Text(message.content)
                     .padding()
                     .background(Color.blue)
@@ -114,7 +92,7 @@ struct MessageView: View {
                     .background(Color.gray)
                     .cornerRadius(15)
                     .foregroundColor(.white)
-                Spacer() // 他のユーザーのメッセージは左側に表示
+                Spacer()
             }
         }
         .padding(message.isCurrentUser ? .leading : .trailing, 60)
@@ -125,5 +103,5 @@ struct MessageView: View {
 
 
 #Preview {
-    ChatView()
+    ChatView(userName: "test")
 }
