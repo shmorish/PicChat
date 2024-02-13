@@ -7,15 +7,30 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView : View {
+    @State var isShowChatView = false
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("PICTCHAT")
+            Button{
+                isShowChatView = true
+            }
+                   label: {
+                Text("入室する")
+                    .foregroundColor(.orange)
+                    .padding()
+                    .background(.fill)
+                    .cornerRadius(10)
+            }.sheet(isPresented: $isShowChatView){
+                    ChatView()
+                }
         }
-        .padding()
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews : some View {
+        ContentView()
     }
 }
 

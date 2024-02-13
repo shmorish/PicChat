@@ -14,6 +14,7 @@
 		4C5344A12B7BDFEA009D5B88 /* PicChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5344A02B7BDFEA009D5B88 /* PicChatTests.swift */; };
 		4C5344AB2B7BDFEA009D5B88 /* PicChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5344AA2B7BDFEA009D5B88 /* PicChatUITests.swift */; };
 		4C5344AD2B7BDFEA009D5B88 /* PicChatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5344AC2B7BDFEA009D5B88 /* PicChatUITestsLaunchTests.swift */; };
+		4C5344BA2B7BE43D009D5B88 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5344B92B7BE43D009D5B88 /* ChatView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		4C5344A62B7BDFEA009D5B88 /* PicChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PicChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5344AA2B7BDFEA009D5B88 /* PicChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicChatUITests.swift; sourceTree = "<group>"; };
 		4C5344AC2B7BDFEA009D5B88 /* PicChatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicChatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4C5344B92B7BE43D009D5B88 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				4C53448F2B7BDFE8009D5B88 /* PicChatApp.swift */,
 				4C5344912B7BDFE8009D5B88 /* ContentView.swift */,
+				4C5344B92B7BE43D009D5B88 /* ChatView.swift */,
 				4C5344932B7BDFEA009D5B88 /* Assets.xcassets */,
 				4C5344952B7BDFEA009D5B88 /* Preview Content */,
 			);
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C5344922B7BDFE8009D5B88 /* ContentView.swift in Sources */,
+				4C5344BA2B7BE43D009D5B88 /* ChatView.swift in Sources */,
 				4C5344902B7BDFE8009D5B88 /* PicChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
